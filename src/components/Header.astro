@@ -1,0 +1,211 @@
+---
+import { MessageSquare, Menu, X } from '@lucide/astro';
+
+interface Props {
+  activePage?: 'home' | 'paket' | 'tentang' | 'destinasi' | 'blog';
+}
+
+const { activePage = 'home' } = Astro.props;
+---
+
+<!-- Fixed Nav Wrapper: Selalu transparan di awal, morphing ke floating saat scroll -->
+<div 
+  id="navWrapper" 
+  class="fixed top-0 inset-x-0 z-50 pointer-events-none transition-all duration-500 ease-out pt-0 px-0"
+>
+  <div 
+    id="navContainer" 
+    class="w-full mx-auto transition-all duration-500 ease-out max-w-full px-0"
+  >
+    <header 
+      id="mainHeader" 
+      class="w-full flex items-center justify-between pointer-events-auto transition-all duration-500 ease-out bg-transparent border border-transparent shadow-none px-6 sm:px-10 lg:px-12 py-5 sm:py-6 rounded-none text-white"
+    >
+      
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-2 group">
+        <span id="logoText" class="text-xl sm:text-2xl font-black tracking-tight text-white transition-colors duration-200">
+          BaliWander<span id="logoDot" class="text-sky-400">.</span>
+        </span>
+      </a>
+
+      <!-- Menu Links Desktop -->
+      <nav id="desktopNav" class="hidden md:flex items-center gap-1.5 text-base font-medium">
+        <a 
+          href="/" 
+          class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
+            activePage === 'home' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
+          }`}
+          data-active={activePage === 'home' ? 'true' : 'false'}
+        >
+          Beranda
+        </a>
+
+        <a 
+          href="/paket-wisata" 
+          class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
+            activePage === 'paket' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
+          }`}
+          data-active={activePage === 'paket' ? 'true' : 'false'}
+        >
+          Paket Wisata
+        </a>
+
+        <a 
+          href="/tentang-kami" 
+          class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
+            activePage === 'tentang' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
+          }`}
+          data-active={activePage === 'tentang' ? 'true' : 'false'}
+        >
+          Tentang Kami
+        </a>
+
+        <a 
+          href="/destinasi" 
+          class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
+            activePage === 'destinasi' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
+          }`}
+          data-active={activePage === 'destinasi' ? 'true' : 'false'}
+        >
+          Destinasi
+        </a>
+
+        <a 
+          href="/blog" 
+          class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
+            activePage === 'blog' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
+          }`}
+          data-active={activePage === 'blog' ? 'true' : 'false'}
+        >
+          Blog
+        </a>
+      </nav>
+
+      <!-- Tombol Kontak Kanan & Mobile Hamburger -->
+      <div class="flex items-center gap-3">
+        <a 
+          href="https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20ingin%20konsultasi%20paket%20tour%20Bali" 
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm sm:text-base font-bold transition-all active:scale-95 shadow-sm"
+        >
+          <MessageSquare class="w-4 h-4 sm:w-5 sm:h-5" />
+          <span>Konsultasi Trip</span>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button 
+          type="button" 
+          id="mobileMenuBtn" 
+          class="md:hidden w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center transition-colors duration-200"
+          aria-label="Buka menu"
+        >
+          <Menu class="w-5 h-5" id="iconMenuOpen" />
+          <X class="w-5 h-5 hidden" id="iconMenuClose" />
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Mobile Dropdown Menu -->
+    <div 
+      id="mobileMenuDropdown" 
+      class="hidden w-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl p-4 pointer-events-auto space-y-1.5 md:hidden"
+    >
+      <a href="/" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'home' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        Beranda
+      </a>
+      <a href="/paket-wisata" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'paket' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        Paket Wisata
+      </a>
+      <a href="/tentang-kami" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'tentang' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        Tentang Kami
+      </a>
+      <a href="/destinasi" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'destinasi' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        Destinasi
+      </a>
+      <a href="/blog" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'blog' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        Blog
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  #mainHeader.is-floating #logoText {
+    color: #0f172a !important;
+  }
+  #mainHeader.is-floating #logoDot {
+    color: #0ea5e9 !important;
+  }
+  #mainHeader.is-floating .nav-link {
+    color: #475569 !important;
+  }
+  #mainHeader.is-floating .nav-link:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+  #mainHeader.is-floating .nav-link[data-active="true"] {
+    background-color: #f1f5f9 !important;
+    color: #0284c7 !important;
+  }
+  #mainHeader.is-floating #mobileMenuBtn {
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+  }
+</style>
+
+<script>
+  const navWrapper = document.getElementById('navWrapper');
+  const navContainer = document.getElementById('navContainer');
+  const mainHeader = document.getElementById('mainHeader');
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+  const iconMenuOpen = document.getElementById('iconMenuOpen');
+  const iconMenuClose = document.getElementById('iconMenuClose');
+
+  let isFloating = false;
+
+  function setFloatingState(floating: boolean) {
+    if (floating === isFloating) return;
+    isFloating = floating;
+
+    if (floating) {
+      navWrapper?.classList.replace('pt-0', 'pt-4');
+      navWrapper?.classList.replace('px-0', 'px-4');
+
+      navContainer?.classList.replace('max-w-full', 'max-w-7xl');
+
+      mainHeader?.classList.remove('rounded-none', 'py-5', 'sm:py-6', 'px-6', 'sm:px-10', 'lg:px-12', 'bg-transparent', 'border-transparent', 'shadow-none');
+      mainHeader?.classList.add('is-floating', 'rounded-2xl', 'sm:rounded-full', 'py-3.5', 'px-6', 'sm:px-8', 'bg-white/95', 'backdrop-blur-md', 'border-slate-200/90', 'shadow-xl', 'shadow-slate-900/5');
+    } else {
+      navWrapper?.classList.replace('pt-4', 'pt-0');
+      navWrapper?.classList.replace('px-4', 'px-0');
+
+      navContainer?.classList.replace('max-w-7xl', 'max-w-full');
+
+      mainHeader?.classList.remove('is-floating', 'rounded-2xl', 'sm:rounded-full', 'py-3.5', 'px-6', 'sm:px-8', 'bg-white/95', 'backdrop-blur-md', 'border-slate-200/90', 'shadow-xl', 'shadow-slate-900/5');
+      mainHeader?.classList.add('rounded-none', 'py-5', 'sm:py-6', 'px-6', 'sm:px-10', 'lg:px-12', 'bg-transparent', 'border-transparent', 'shadow-none');
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    setFloatingState(window.scrollY > 40);
+  }, { passive: true });
+  setFloatingState(window.scrollY > 40);
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    const isHidden = mobileMenuDropdown?.classList.contains('hidden');
+    if (isHidden) {
+      mobileMenuDropdown?.classList.remove('hidden');
+      iconMenuOpen?.classList.add('hidden');
+      iconMenuClose?.classList.remove('hidden');
+    } else {
+      mobileMenuDropdown?.classList.add('hidden');
+      iconMenuOpen?.classList.remove('hidden');
+      iconMenuClose?.classList.add('hidden');
+    }
+  });
+</script>

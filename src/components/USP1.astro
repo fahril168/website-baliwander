@@ -1,0 +1,82 @@
+---
+import { Check } from '@lucide/astro';
+
+const points = [
+  {
+    title: 'Driver & Guide Asli Lokal Bali',
+    desc: 'Bukan sekadar mengantar rute. Driver kami paham jam sepi tempat wisata, jalur tikus saat jalan raya padat, dan rekomendasi kuliner higienis yang ramah di kantong.'
+  },
+  {
+    title: 'Harga Jujur Tanpa Toko Oleh-Oleh Paksa',
+    desc: 'Banyak travel murah memaksa tamu mampir berjam-jam ke galeri komisi. Bersama kami, waktu liburan sepenuhnya milik kamu tanpa agenda belanja tersembunyi.'
+  },
+  {
+    title: '100% Private Trip & Armada Bersih Terawat',
+    desc: 'Mobil tidak pernah digabung dengan rombongan orang asing. Seluruh unit (Avanza, Innova Reborn, HiAce) bersih, wangi, dan pendingin udara selalu dingin prima.'
+  }
+];
+---
+
+<section id="usp-1" class="py-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+      
+      <!-- Sisi Kiri: Narasi Nilai & Poin Keunggulan (lg:col-span-6) -->
+      <div class="lg:col-span-6 space-y-8">
+        <div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+            Mengapa Memilih Kami?
+          </h2>
+          <p class="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed max-w-xl">
+            Kami merancang setiap perjalanan layaknya mengantar teman baik keliling Bali. Transparan, nyaman, dan bebas dari jebakan turis yang melelahkan.
+          </p>
+        </div>
+
+        <!-- 3 Poin Keunggulan Bersih & Humanis -->
+        <div class="space-y-6 pt-2">
+          {points.map((pt) => (
+            <div class="flex items-start gap-4 group">
+              <div class="w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 mt-1 transition-colors group-hover:bg-sky-500 group-hover:text-white">
+                <Check class="w-5 h-5 stroke-[2.5]" />
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
+                  {pt.title}
+                </h3>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-lg">
+                  {pt.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Sisi Kanan: 2 Foto Berukuran Lebih Besar (lg:col-span-6, tinggi & gagah) -->
+      <div class="lg:col-span-6">
+        <div class="grid grid-cols-12 gap-4 sm:gap-6 items-center">
+          
+          <!-- Foto 1: Suasana Tebing dan Pantai Kelingking Nusa Penida -->
+          <div class="col-span-7 rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-slate-100 h-[420px] sm:h-[480px] bg-slate-100">
+            <img 
+              src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1000&q=80" 
+              alt="Wisata Tebing dan Pantai Bali" 
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+            />
+          </div>
+
+          <!-- Foto 2: Pura Uluwatu Sunset (Diberi offset vertikal rapi) -->
+          <div class="col-span-5 rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-slate-100 h-[360px] sm:h-[420px] bg-slate-100 translate-y-6 sm:translate-y-8">
+            <img 
+              src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=800&q=80" 
+              alt="Pemandangan Sunset Pura Uluwatu Bali" 
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+            />
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

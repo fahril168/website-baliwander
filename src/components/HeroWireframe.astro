@@ -1,0 +1,116 @@
+---
+import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
+---
+
+<section class="relative overflow-visible">
+  <!-- Hero Banner Image Area: Full screen height yang megah (min-h-[88vh] hingga 94vh) -->
+  <div class="relative min-h-[85vh] sm:min-h-[88vh] lg:min-h-[94vh] flex items-center justify-center overflow-hidden">
+    <!-- Unsplash Bali Clean Background: Pura Ulun Danu Bratan (U_i6h9Y50wQ) -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2000&q=85" 
+        alt="Pura Ulun Danu Bratan Bali" 
+        class="w-full h-full object-cover object-center"
+      />
+      <!-- Soft translucent scrim, menjaga kecerahan foto tropis -->
+      <div class="absolute inset-0 bg-slate-950/40"></div>
+    </div>
+
+    <!-- Centered Clean Headline & Subheadline: Posisi presisi di tengah vertikal -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-6 pt-16 pb-28 sm:pt-20 sm:pb-32">
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xs">
+        Travel Agency Terpercaya<br>di Bali.
+      </h1>
+      <p class="text-base sm:text-xl lg:text-2xl text-slate-100 max-w-3xl mx-auto font-normal leading-relaxed opacity-95">
+        Melayani paket tour harian, perjalanan keluarga, dan sewa mobil dengan supir lokal berpengalaman.
+      </p>
+    </div>
+  </div>
+
+  <!-- Floating Booking Bar: Ukuran lebih besar, leluasa & mantap (max-w-6xl) -->
+  <div class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-20">
+    <div class="bg-white rounded-3xl sm:rounded-4xl shadow-2xl shadow-slate-300/60 border border-slate-100 p-3 sm:p-4">
+      <form id="heroBookingForm" class="flex flex-col md:flex-row items-stretch md:items-center gap-2 sm:gap-3">
+        
+        <!-- Field 1: Destinasi -->
+        <div class="flex-1 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
+          <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
+            Destinasi
+          </span>
+          <select id="heroDest" class="w-full bg-transparent text-base font-bold text-slate-900 focus:outline-none cursor-pointer">
+            <option value="Nusa Penida">Nusa Penida</option>
+            <option value="Ubud & Kintamani">Ubud & Kintamani</option>
+            <option value="Uluwatu & Jimbaran">Uluwatu & Jimbaran</option>
+            <option value="Bedugul & Tanah Lot">Bedugul & Tanah Lot</option>
+            <option value="Gili Islands (Lombok)">Gili Islands (Lombok)</option>
+          </select>
+        </div>
+
+        <!-- Divider Desktop -->
+        <div class="hidden md:block w-px h-12 bg-slate-200/80 my-auto"></div>
+
+        <!-- Field 2: Pilihan Trip -->
+        <div class="flex-1 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
+          <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
+            Pilihan Trip
+          </span>
+          <select id="heroType" class="w-full bg-transparent text-base font-bold text-slate-900 focus:outline-none cursor-pointer">
+            <option value="Private Trip">Private Trip</option>
+            <option value="Paket Honeymoon">Paket Honeymoon</option>
+            <option value="Open Trip">Open Trip</option>
+            <option value="Sewa Mobil + Supir">Sewa Mobil + Supir</option>
+          </select>
+        </div>
+
+        <!-- Divider Desktop -->
+        <div class="hidden md:block w-px h-12 bg-slate-200/80 my-auto"></div>
+
+        <!-- Field 3: Tanggal -->
+        <div class="w-full md:w-56 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
+          <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
+            Tanggal
+          </span>
+          <input 
+            type="date" 
+            id="heroDate" 
+            class="w-full bg-transparent text-base font-bold text-slate-900 focus:outline-none cursor-pointer" 
+          />
+        </div>
+
+        <!-- Field 4: Tombol Booking Tetap di Ujung Kanan (Proporsional & Nyaman Diklik) -->
+        <div class="p-1.5 shrink-0">
+          <button 
+            type="button" 
+            id="btnHeroSearch"
+            class="w-full md:w-auto h-14 md:h-16 px-8 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-base flex items-center justify-center gap-2.5 transition-all active:scale-95 cursor-pointer shadow-md shadow-sky-500/15 whitespace-nowrap"
+          >
+            <span>Cari Trip</span>
+            <ArrowRight class="w-5 h-5" />
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const heroDate = document.getElementById('heroDate') as HTMLInputElement;
+  const btnHeroSearch = document.getElementById('btnHeroSearch');
+
+  // Default tanggal lusa
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 2);
+  if (heroDate) {
+    heroDate.value = targetDate.toISOString().split('T')[0];
+  }
+
+  btnHeroSearch?.addEventListener('click', () => {
+    const dest = (document.getElementById('heroDest') as HTMLSelectElement)?.value || 'Bali';
+    const type = (document.getElementById('heroType') as HTMLSelectElement)?.value || 'Private Trip';
+    const date = (document.getElementById('heroDate') as HTMLInputElement)?.value || 'Belum pasti';
+
+    const text = `Halo BaliWander, saya ingin cek ketersediaan trip:\n- Destinasi: ${dest}\n- Tipe: ${type}\n- Tanggal: ${date}\n\nBisa tolong kirimkan rincian biaya dan ketersediaannya?`;
+    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank');
+  });
+</script>

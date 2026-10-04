@@ -1,0 +1,120 @@
+---
+import { ChevronDown } from '@lucide/astro';
+
+const faqs = [
+  {
+    q: 'Apakah bisa jemput di hotel atau vila yang lokasinya jauh?',
+    a: 'Bisa. Penjemputan gratis mencakup area Kuta, Seminyak, Canggu, Sanur, Ubud, Jimbaran, Nusa Dua, hingga Uluwatu. Untuk area Bali Utara (seperti Lovina/Amed), cukup konfirmasikan alamat ke tim kami.'
+  },
+  {
+    q: 'Bolehkah meminta rute khusus (custom) di luar paket yang ada?',
+    a: 'Sangat boleh. Karena semua paket kami berkonsep private tour, kamu bebas menentukan destinasi, menambahkan mampir ke cafe tertentu, atau mengatur durasi berhenti di tiap spot foto.'
+  },
+  {
+    q: 'Berapa persen uang muka (DP) untuk mengunci jadwal?',
+    a: 'DP pemesanan cukup 20% – 30% untuk mengamankan supir dan ketersediaan unit mobil. Sisa pelunasan bisa dibayarkan secara tunai atau transfer saat bertemu di hari pertama trip.'
+  },
+  {
+    q: 'Bagaimana jika cuaca buruk saat jadwal tour Nusa Penida?',
+    a: 'Jika otoritas pelabuhan membatalkan penyeberangan fast boat demi keselamatan, kami memberikan opsi penjadwalan ulang tanggal atau pengalihan rute ke destinasi darat di pulau utama Bali tanpa hangus.'
+  },
+  {
+    q: 'Apakah harga paket sudah termasuk bensin dan tiket parkir?',
+    a: 'Ya, seluruh biaya paket private tour sudah berkonsep all-in (mobil ber-AC, bensin, supir lokal merangkap pemandu, dan biaya parkir destinasi wisata).'
+  }
+];
+---
+
+<section id="faq" class="py-24 bg-white border-t border-slate-100">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+        Pertanyaan yang Sering Diajukan
+      </h2>
+      <p class="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
+        Hal penting seputar penjemputan, sistem pembayaran, dan fleksibilitas jadwal liburanmu di Bali.
+      </p>
+    </div>
+
+    <!-- Accordion Garis Minimalis -->
+    <div class="divide-y divide-slate-200/80 border-y border-slate-200/80">
+      {faqs.map((f, i) => (
+        <div class="faq-item py-6">
+          <button 
+            type="button"
+            class="faq-btn w-full flex items-center justify-between text-left font-bold text-lg sm:text-xl text-slate-900 hover:text-sky-600 transition-colors gap-6 cursor-pointer select-none group"
+            aria-expanded="false"
+          >
+            <span>{f.q}</span>
+            <div class="faq-icon-wrapper w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-sky-600 shrink-0 transition-transform duration-300">
+              <ChevronDown class="w-5 h-5 transition-transform duration-300" />
+            </div>
+          </button>
+          
+          <!-- Answer Collapse Container -->
+          <div class="faq-collapse overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+            <p class="pt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl pr-6 font-normal">
+              {f.a}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item) => {
+    const btn = item.querySelector('.faq-btn') as HTMLButtonElement;
+    const collapse = item.querySelector('.faq-collapse') as HTMLElement;
+    const icon = item.querySelector('.faq-icon-wrapper svg') as HTMLElement;
+
+    btn?.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+      // Tutup FAQ lain jika ingin 1 yang terbuka (opsional, accordion clean)
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          const otherBtn = otherItem.querySelector('.faq-btn');
+          const otherCollapse = otherItem.querySelector('.faq-collapse') as HTMLElement;
+          const otherIcon = otherItem.querySelector('.faq-icon-wrapper svg') as HTMLElement;
+          
+          otherBtn?.setAttribute('aria-expanded', 'false');
+          if (otherCollapse) {
+            otherCollapse.style.maxHeight = '0px';
+            otherCollapse.classList.remove('opacity-100');
+            otherCollapse.classList.add('opacity-0');
+          }
+          if (otherIcon) {
+            otherIcon.style.transform = 'rotate(0deg)';
+            otherIcon.classList.remove('text-sky-600');
+          }
+        }
+      });
+
+      if (isOpen) {
+        btn.setAttribute('aria-expanded', 'false');
+        collapse.style.maxHeight = '0px';
+        collapse.classList.remove('opacity-100');
+        collapse.classList.add('opacity-0');
+        if (icon) {
+          icon.style.transform = 'rotate(0deg)';
+          icon.classList.remove('text-sky-600');
+        }
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        collapse.style.maxHeight = `${collapse.scrollHeight + 20}px`;
+        collapse.classList.remove('opacity-0');
+        collapse.classList.add('opacity-100');
+        if (icon) {
+          icon.style.transform = 'rotate(180deg)';
+          icon.classList.add('text-sky-600');
+        }
+      }
+    });
+  });
+</script>

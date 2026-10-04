@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import PageHeaderBanner from '../components/PageHeaderBanner.astro';
+import Footer from '../components/Footer.astro';
+import { ShieldCheck, HeartHandshake, Sparkles } from '@lucide/astro';
+---
+
+<Layout 
+  title="Tentang Kami | BaliWander Tour & Travel"
+  description="Mengenal BaliWander, penyedia layanan private tour dan sewa transportasi berizin resmi di Bali yang mengutamakan kenyamanan dan transparansi."
+>
+  <Header activePage="tentang" />
+
+  <main>
+    <!-- Header Banner Gambar Full-Width -->
+    <PageHeaderBanner 
+      title="Tentang BaliWander"
+      description="Perjalanan santai dan berkesan keliling Bali bersama supir lokal berpengalaman. Bebas dari jebakan turis dan tanpa agenda belanja paksa."
+      image="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=2000&q=85"
+    />
+
+    <div class="py-24 bg-white min-h-screen border-t border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+        
+        <!-- Intro Section: 2 Kolom Asimetris Editorial -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div class="lg:col-span-7 space-y-6">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              Pengalaman Berkeliling Bali Seperti Bersama Sahabat.
+            </h2>
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              BaliWander didirikan oleh pengemudi dan pemandu lokal Bali yang jenuh melihat praktik travel murah yang sering kali memotong waktu liburan turis demi komisi toko titipan.
+            </p>
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              Kami percaya bahwa waktu liburan bersama keluarga atau pasangan adalah momen berharga. Filosofi kami sederhana: melayani tamu layaknya menemani teman baik yang baru pertama kali berkunjung ke pulau kami.
+            </p>
+
+            <div class="pt-4 flex items-center gap-6 text-sm text-slate-700 font-semibold">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <span>100% Berizin Usaha Resmi</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-sky-500"></span>
+                <span>Driver Asli Warga Lokal</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-slate-100 h-[460px] bg-slate-100">
+              <img 
+                src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1000&q=80" 
+                alt="Budaya dan Keramahan Bali" 
+                class="w-full h-full object-cover" 
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Nilai Pokok Layanan Kami -->
+        <div class="pt-16 border-t border-slate-100">
+          <div class="max-w-2xl mb-14">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Prinsip Kerja Kami
+            </h2>
+            <p class="text-base sm:text-lg text-slate-600 mt-2">
+              Standar pelayanan yang kami jaga di setiap armada dan rute penjemputan.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-8 rounded-3xl bg-slate-50/70 border border-slate-100 space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-white text-sky-600 flex items-center justify-center shadow-xs">
+                <ShieldCheck class="w-6 h-6" />
+              </div>
+              <h3 class="text-xl font-bold text-slate-900">Transparansi Biaya</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Biaya yang kamu bayar sudah mencakup bahan bakar, jasa supir, tiket masuk, dan parkir. Tidak ada pungutan siluman di tengah perjalanan.
+              </p>
+            </div>
+
+            <div class="p-8 rounded-3xl bg-slate-50/70 border border-slate-100 space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-white text-sky-600 flex items-center justify-center shadow-xs">
+                <HeartHandshake class="w-6 h-6" />
+              </div>
+              <h3 class="text-xl font-bold text-slate-900">Jadwal Sepenuhnya Fleksibel</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Ingin mampir ke kedai kopi viral di Ubud atau mengganti rute karena anak mengantuk? Supir kami siap menyesuaikan ritme perjalananmu.
+              </p>
+            </div>
+
+            <div class="p-8 rounded-3xl bg-slate-50/70 border border-slate-100 space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-white text-sky-600 flex items-center justify-center shadow-xs">
+                <Sparkles class="w-6 h-6" />
+              </div>
+              <h3 class="text-xl font-bold text-slate-900">Kenyamanan Armada</h3>
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Setiap mobil (Avanza, Innova Reborn, HiAce Commuter) rutin dicuci, wangi, bebas asap rokok, dan AC dipastikan dingin optimal.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

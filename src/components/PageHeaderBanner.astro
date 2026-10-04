@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+}
+
+const { title, description, image } = Astro.props;
+---
+
+<section class="relative min-h-[50vh] sm:min-h-[55vh] flex items-center justify-center overflow-hidden">
+  <!-- Background Image Full-Width -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src={image} 
+      alt={title}
+      class="w-full h-full object-cover object-center" 
+    />
+    <!-- Scrim Gelap Transparan agar Teks Kontras dan Navbar Terlihat Jelas -->
+    <div class="absolute inset-0 bg-slate-950/60"></div>
+  </div>
+
+  <!-- Konten Judul di Tengah -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4 pt-20 pb-12">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12] drop-shadow-xs">
+      {title}
+    </h1>
+    <p class="text-base sm:text-lg lg:text-xl text-slate-100 max-w-2xl mx-auto font-normal leading-relaxed opacity-95">
+      {description}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import HeroWireframe from '../components/HeroWireframe.astro';
+import PopularPackage from '../components/PopularPackage.astro';
+import USP1 from '../components/USP1.astro';
+import FeaturedTrips from '../components/FeaturedTrips.astro';
+import PopularDestinations from '../components/PopularDestinations.astro';
+import Testimonials from '../components/Testimonials.astro';
+import BookingStepsAndFAQ from '../components/BookingStepsAndFAQ.astro';
+import BlogSection from '../components/BlogSection.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="BaliWander - Tour & Travel Bali Profesional | Private & Open Trip">
+	<!-- 1. Header Navigation Sesuai Wireframe -->
+	<Header />
+
+	<main>
+		<!-- 2. Hero Section (Headline + Booking Widget) -->
+		<HeroWireframe />
+
+		<!-- 3. Paket Wisata Populer (Tur Harian) -->
+		<PopularPackage />
+
+		<!-- 4. Mengapa Memilih Kami (USP + Foto Editorial) -->
+		<USP1 />
+
+		<!-- 5. Paket Liburan Lengkap & Menginap (Honeymoon & Family) -->
+		<FeaturedTrips />
+
+		<!-- 6. Destinasi Wisata Pilihan (3 Kartu Wilayah) -->
+		<PopularDestinations />
+
+		<!-- 7. Ulasan Nyata / Testimoni Wisatawan (Social Proof) -->
+		<Testimonials />
+
+		<!-- 8. 3 Langkah Mudah Booking & FAQ Ringkas -->
+		<BookingStepsAndFAQ />
+
+		<!-- 9. Blog & Panduan Wisata -->
+		<BlogSection />
+
+		<!-- 10. Banner Call-to-Action WhatsApp -->
+		<CtaBanner />
+	</main>
+
+	<!-- 11. Footer -->
+	<Footer />
+</Layout>

@@ -1,0 +1,83 @@
+---
+import { Quote } from '@lucide/astro';
+
+const testimonials = [
+  {
+    initials: 'BS',
+    name: 'Budi Santoso & Keluarga',
+    origin: 'Jakarta Selatan',
+    text: 'Sangat terbantu bawa anak balita dan orang tua. Supir kami (Bli Wayan) nyetirnya halus, tepat waktu jemput di Bandara Ngurah Rai, dan sabar menunggu saat anak rewel di jalan. Mobilnya bersih dan wangi.'
+  },
+  {
+    initials: 'DA',
+    name: 'Dimas & Anisa',
+    origin: 'Surabaya',
+    text: 'Awalnya ragu booking online tanpa kantor di kota kami, tapi respon admin WhatsApp sangat cepat dan transparan. Itinerary santai tanpa diburu-buru waktu, makan malam di Jimbaran juga dapat spot sunset terbaik.'
+  },
+  {
+    initials: 'SW',
+    name: 'Sarah Wijaya',
+    origin: 'Bandung',
+    text: 'Jadwal speedboat dari Sanur pas banget, supir lokal di Penida jago mengambil foto dan video di Kelingking Cliff. Tanpa mampir toko oleh-oleh komisi, benar-benar murni keliling pantai.'
+  }
+];
+---
+
+<section id="testimoni" class="relative py-28 overflow-hidden">
+  <!-- Background Image Pemandangan Alam Bali Ikonik -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=2000&q=85" 
+      alt="Pemandangan Alam Bali" 
+      class="w-full h-full object-cover object-center" 
+    />
+    <!-- Scrim Gelap Bersih Tanpa Blur Buatan -->
+    <div class="absolute inset-0 bg-slate-950/70"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Section Header (Teks Putih Kontras di Atas Background) -->
+    <div class="max-w-2xl mx-auto text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+        Kata Mereka yang Sudah Berangkat
+      </h2>
+      <p class="text-base sm:text-lg text-slate-200 mt-3 leading-relaxed">
+        Cerita jujur dari para tamu yang telah mempercayakan perjalanan liburan mereka di Bali kepada tim kami.
+      </p>
+    </div>
+
+    <!-- 3 Kolom Kartu Testimoni: Putih Solid / Glass Card Elegan -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {testimonials.map((t) => (
+        <div class="bg-white/95 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-2xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5 hover:bg-white">
+          
+          <div class="space-y-4">
+            <Quote class="w-8 h-8 text-sky-500 opacity-80" />
+            <!-- Teks Ulasan -->
+            <p class="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
+              "{t.text}"
+            </p>
+          </div>
+
+          <!-- Profil Pengulas: Avatar Inisial + Nama & Asal Kota -->
+          <div class="mt-8 pt-6 border-t border-slate-100 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-full bg-sky-50 text-sky-700 font-bold text-sm flex items-center justify-center shrink-0 border border-sky-100">
+              {t.initials}
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 leading-tight">
+                {t.name}
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-400 mt-0.5 font-medium">
+                {t.origin}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
