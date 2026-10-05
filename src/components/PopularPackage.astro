@@ -1,10 +1,15 @@
 ---
-import { popularPackages } from '../data/tours';
-import { MapPin, Clock, ArrowRight, ChevronLeft, ChevronRight } from '@lucide/astro';
+import { popularPackagesData } from '../data/tours';
+import { MapPin, Clock, ArrowRight, ChevronLeft, ChevronRight, Check } from '@lucide/astro';
+import { useTranslations, formatPrice, getRouteByLang, type Lang } from '../i18n/ui';
 
-function formatRupiah(num: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+interface Props {
+  lang?: Lang;
 }
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+const packages = popularPackagesData[lang];
 ---
 
 <section id="popular-packages" class="py-24 bg-slate-50/70 border-t border-slate-100 overflow-hidden">
@@ -14,56 +19,56 @@ function formatRupiah(num: number) {
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
       <div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-          Paket Wisata Populer
+          {t('popular.title')}
         </h2>
         <p class="text-base sm:text-lg text-slate-600 mt-2 max-w-xl">
-          Rute favorit dengan jadwal yang efisien. Tanpa belanja paksa dan tanpa biaya tersembunyi.
+          {t('popular.subtitle')}
         </p>
       </div>
 
-      <!-- Link Text "Lihat Selengkapnya" (Clean inline text link dengan panah animasi) -->
+      <!-- Link Text "Lihat Selengkapnya" -->
       <a 
-        href="#popular-packages" 
+        href={getRouteByLang(lang, 'paket')} 
         class="group inline-flex items-center gap-1.5 text-base sm:text-lg font-bold text-sky-600 hover:text-sky-700 transition-colors whitespace-nowrap self-start sm:self-auto py-1"
       >
-        <span>Lihat Selengkapnya</span>
+        <span>{t('popular.view_more')}</span>
         <ArrowRight class="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
 
-    <!-- Carousel Container dengan Tombol Navigasi Mengambang di Sisi Kiri & Kanan Card -->
+    <!-- Carousel Container -->
     <div class="relative group/carousel">
       
-      <!-- Tombol Navigasi Kiri (Mengambang di tepi kiri card) -->
+      <!-- Tombol Navigasi Kiri -->
       <button 
         type="button" 
         id="pkgPrevBtn" 
         class="hidden sm:flex absolute -left-5 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-slate-200/90 bg-white/95 hover:bg-white text-slate-700 hover:text-sky-600 items-center justify-center shadow-lg transition-all active:scale-95 cursor-pointer opacity-90 hover:opacity-100 hover:scale-105"
-        aria-label="Paket Sebelumnya"
+        aria-label="Previous Package"
       >
         <ChevronLeft class="w-6 h-6" />
       </button>
 
-      <!-- Tombol Navigasi Kanan (Mengambang di tepi kanan card) -->
+      <!-- Tombol Navigasi Kanan -->
       <button 
         type="button" 
         id="pkgNextBtn" 
         class="hidden sm:flex absolute -right-5 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-slate-200/90 bg-white/95 hover:bg-white text-slate-700 hover:text-sky-600 items-center justify-center shadow-lg transition-all active:scale-95 cursor-pointer opacity-90 hover:opacity-100 hover:scale-105"
-        aria-label="Paket Selanjutnya"
+        aria-label="Next Package"
       >
         <ChevronRight class="w-6 h-6" />
       </button>
 
-      <!-- Carousel / Slider Track: Menampilkan 3 kartu di desktop, 2 di tablet, 1 di mobile -->
+      <!-- Carousel / Slider Track -->
       <div 
         id="pkgSliderTrack" 
         class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
         style="scrollbar-width: none; -ms-overflow-style: none;"
       >
-        {popularPackages.map((pkg) => (
+        {packages.map((pkg) => (
           <div class="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 snap-start bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-1">
             
-            <!-- Image Cover (Bersih, foto tinggi & estetik) -->
+            <!-- Image Cover -->
             <div class="relative h-64 overflow-hidden bg-slate-100">
               <img 
                 src={pkg.image} 
@@ -72,12 +77,11 @@ function formatRupiah(num: number) {
               />
             </div>
 
-            <!-- Content Body (Sangat Bersih) -->
+            <!-- Card Body Content -->
             <div class="p-6 flex-1 flex flex-col justify-between">
-              <div class="space-y-3">
-                
-                <!-- Lokasi di bawah kiri gambar (dengan ikon, tanpa background) & Durasi -->
-                <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <div>
+                <!-- Lokasi & Durasi -->
+                <div class="flex items-center justify-between text-xs text-slate-500 font-medium mb-3">
                   <span class="inline-flex items-center gap-1.5 text-slate-600 font-semibold">
                     <MapPin class="w-4 h-4 text-sky-500 shrink-0" />
                     <span>{pkg.destination}</span>
@@ -93,33 +97,49 @@ function formatRupiah(num: number) {
                   {pkg.title}
                 </h3>
 
+                <!-- Poin-poin Centang Destinasi / Highlights -->
+                <div class="mt-4 pt-3 border-t border-slate-100 space-y-2">
+                  {pkg.highlights.slice(0, 3).map((item) => (
+                    <div class="flex items-start gap-2 text-xs sm:text-sm text-slate-600">
+                      <Check class="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <!-- Price & Tombol Pesan -->
+              <!-- Bagian Bawah: Harga & CTA Button -->
               <div class="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <span class="text-xs text-slate-400 font-medium block">Mulai dari</span>
+                  <span class="text-xs text-slate-400 font-medium block">
+                    {t('popular.from')}
+                  </span>
                   <div class="flex items-baseline gap-1">
                     <span class="text-xl sm:text-2xl font-extrabold text-slate-900">
-                      {formatRupiah(pkg.price)}
+                      {formatPrice(pkg.price, lang)}
                     </span>
                     <span class="text-xs text-slate-500 font-medium">/pax</span>
                   </div>
                 </div>
 
-                <!-- Tombol Pesan Pill Biru Langit Konsisten -->
+                <!-- CTA WhatsApp Button Biru Langit -->
                 <a 
-                  href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20tertarik%20dengan%20paket%20${encodeURIComponent(pkg.title)}`}
-                  target="_blank"
+                  href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+                    lang === 'en'
+                      ? `Hello BaliWander, I would like to inquire about the ${pkg.title} package.`
+                      : `Halo BaliWander, saya tertarik dengan paket ${pkg.title}`
+                  )}`} 
+                  target="_blank" 
                   rel="noopener noreferrer"
                   class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold transition-all active:scale-95 shadow-sm shadow-sky-500/15 whitespace-nowrap cursor-pointer"
                 >
-                  <span>Pesan</span>
+                  <span>{lang === 'en' ? 'Book Now' : 'Pesan'}</span>
                   <ArrowRight class="w-4 h-4" />
                 </a>
               </div>
 
             </div>
+
           </div>
         ))}
       </div>
@@ -134,17 +154,15 @@ function formatRupiah(num: number) {
   const prevBtn = document.getElementById('pkgPrevBtn');
   const nextBtn = document.getElementById('pkgNextBtn');
 
-  function getCardWidth() {
-    if (!track || !track.firstElementChild) return 350;
-    const card = track.firstElementChild as HTMLElement;
-    return card.offsetWidth + 24; // lebar kartu + gap-6 (24px)
+  if (track && prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => {
+      const cardWidth = track.firstElementChild?.clientWidth || 360;
+      track.scrollBy({ left: -(cardWidth + 24), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const cardWidth = track.firstElementChild?.clientWidth || 360;
+      track.scrollBy({ left: cardWidth + 24, behavior: 'smooth' });
+    });
   }
-
-  prevBtn?.addEventListener('click', () => {
-    track?.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
-  });
-
-  nextBtn?.addEventListener('click', () => {
-    track?.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
-  });
 </script>

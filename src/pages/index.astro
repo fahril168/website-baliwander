@@ -13,39 +13,43 @@ import CtaBanner from '../components/CtaBanner.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="BaliWander - Tour & Travel Bali Profesional | Private & Open Trip">
+<Layout 
+	title="BaliWander - Tour & Travel Bali Profesional | Private & Open Trip"
+	description="Paket wisata eksklusif Bali & Lombok terbaik dengan layanan private & open trip profesional."
+	lang="id"
+>
 	<!-- 1. Header Navigation Sesuai Wireframe -->
-	<Header />
+	<Header activePage="home" lang="id" />
 
 	<main>
 		<!-- 2. Hero Section (Headline + Booking Widget) -->
-		<HeroWireframe />
+		<HeroWireframe lang="id" />
 
 		<!-- 3. Paket Wisata Populer (Tur Harian) -->
-		<PopularPackage />
+		<PopularPackage lang="id" />
 
 		<!-- 4. Mengapa Memilih Kami (USP + Foto Editorial) -->
-		<USP1 />
+		<USP1 lang="id" />
 
 		<!-- 5. Paket Liburan Lengkap & Menginap (Honeymoon & Family) -->
-		<FeaturedTrips />
+		<FeaturedTrips lang="id" />
 
 		<!-- 6. Destinasi Wisata Pilihan (3 Kartu Wilayah) -->
-		<PopularDestinations />
+		<PopularDestinations lang="id" />
 
 		<!-- 7. Ulasan Nyata / Testimoni Wisatawan (Social Proof) -->
-		<Testimonials />
+		<Testimonials lang="id" />
 
 		<!-- 8. 3 Langkah Mudah Booking & FAQ Ringkas -->
-		<BookingStepsAndFAQ />
+		<BookingStepsAndFAQ lang="id" />
 
 		<!-- 9. Blog & Panduan Wisata -->
-		<BlogSection />
+		<BlogSection lang="id" />
 
 		<!-- 10. Banner Call-to-Action WhatsApp -->
-		<CtaBanner />
+		<CtaBanner lang="id" />
 	</main>
 
 	<!-- 11. Footer -->
-	<Footer />
+	<Footer lang="id" />
 </Layout>

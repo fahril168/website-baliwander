@@ -1,5 +1,13 @@
 ---
 import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="relative overflow-visible">
@@ -19,10 +27,10 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
     <!-- Centered Clean Headline & Subheadline: Posisi presisi di tengah vertikal -->
     <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-6 pt-16 pb-28 sm:pt-20 sm:pb-32">
       <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-xs">
-        Travel Agency Terpercaya<br>di Bali.
+        {t('hero.title_part1')}<br>{t('hero.title_part2')}
       </h1>
       <p class="text-base sm:text-xl lg:text-2xl text-slate-100 max-w-3xl mx-auto font-normal leading-relaxed opacity-95">
-        Melayani paket tour harian, perjalanan keluarga, dan sewa mobil dengan supir lokal berpengalaman.
+        {t('hero.subtitle')}
       </p>
     </div>
   </div>
@@ -35,7 +43,7 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
         <!-- Field 1: Destinasi -->
         <div class="flex-1 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
           <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
-            Destinasi
+            {t('hero.dest_label')}
           </span>
           <select id="heroDest" class="w-full bg-transparent text-base font-bold text-slate-900 focus:outline-none cursor-pointer">
             <option value="Nusa Penida">Nusa Penida</option>
@@ -52,13 +60,13 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
         <!-- Field 2: Pilihan Trip -->
         <div class="flex-1 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
           <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
-            Pilihan Trip
+            {t('hero.trip_label')}
           </span>
           <select id="heroType" class="w-full bg-transparent text-base font-bold text-slate-900 focus:outline-none cursor-pointer">
-            <option value="Private Trip">Private Trip</option>
-            <option value="Paket Honeymoon">Paket Honeymoon</option>
-            <option value="Open Trip">Open Trip</option>
-            <option value="Sewa Mobil + Supir">Sewa Mobil + Supir</option>
+            <option value="Private Trip">{t('hero.trip_private')}</option>
+            <option value="Paket Honeymoon">{t('hero.trip_honeymoon')}</option>
+            <option value="Open Trip">{t('hero.trip_open')}</option>
+            <option value="Sewa Mobil + Supir">{t('hero.trip_rental')}</option>
           </select>
         </div>
 
@@ -68,7 +76,7 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
         <!-- Field 3: Tanggal -->
         <div class="w-full md:w-56 p-4 sm:px-6 rounded-2xl hover:bg-slate-50 transition-colors">
           <span class="block text-xs font-semibold tracking-wider text-slate-400 uppercase mb-1">
-            Tanggal
+            {t('hero.date_label')}
           </span>
           <input 
             type="date" 
@@ -77,14 +85,15 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
           />
         </div>
 
-        <!-- Field 4: Tombol Booking Tetap di Ujung Kanan (Proporsional & Nyaman Diklik) -->
+        <!-- Field 4: Tombol Booking Tetap di Ujung Kanan -->
         <div class="p-1.5 shrink-0">
           <button 
             type="button" 
             id="btnHeroSearch"
+            data-lang={lang}
             class="w-full md:w-auto h-14 md:h-16 px-8 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-base flex items-center justify-center gap-2.5 transition-all active:scale-95 cursor-pointer shadow-md shadow-sky-500/15 whitespace-nowrap"
           >
-            <span>Cari Trip</span>
+            <span>{t('hero.search_btn')}</span>
             <ArrowRight class="w-5 h-5" />
           </button>
         </div>
@@ -98,19 +107,22 @@ import { Calendar, Users, MapPin, ArrowRight } from '@lucide/astro';
   const heroDate = document.getElementById('heroDate') as HTMLInputElement;
   const btnHeroSearch = document.getElementById('btnHeroSearch');
 
-  // Default tanggal lusa
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + 2);
   if (heroDate) {
-    heroDate.value = targetDate.toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
+    heroDate.min = today;
+    heroDate.value = today;
   }
 
   btnHeroSearch?.addEventListener('click', () => {
-    const dest = (document.getElementById('heroDest') as HTMLSelectElement)?.value || 'Bali';
+    const dest = (document.getElementById('heroDest') as HTMLSelectElement)?.value || 'Nusa Penida';
     const type = (document.getElementById('heroType') as HTMLSelectElement)?.value || 'Private Trip';
-    const date = (document.getElementById('heroDate') as HTMLInputElement)?.value || 'Belum pasti';
+    const date = (document.getElementById('heroDate') as HTMLInputElement)?.value || '';
+    const currentLang = btnHeroSearch.getAttribute('data-lang') || 'id';
 
-    const text = `Halo BaliWander, saya ingin cek ketersediaan trip:\n- Destinasi: ${dest}\n- Tipe: ${type}\n- Tanggal: ${date}\n\nBisa tolong kirimkan rincian biaya dan ketersediaannya?`;
+    const text = currentLang === 'en'
+      ? `Hello BaliWander, I would like to book a trip to ${dest} (${type}) for date ${date}. Could you please share more details?`
+      : `Halo BaliWander, saya ingin reservasi/tanya paket trip ke ${dest} (${type}) untuk tanggal ${date}. Boleh info selengkapnya?`;
+
     window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank');
   });
 </script>

@@ -1,11 +1,18 @@
 ---
-import { MessageSquare, Menu, X } from '@lucide/astro';
+import { MessageSquare, Menu, X, Globe } from '@lucide/astro';
+import { useTranslations, getRouteByLang, type Lang } from '../i18n/ui';
 
 interface Props {
   activePage?: 'home' | 'paket' | 'tentang' | 'destinasi' | 'blog';
+  lang?: Lang;
 }
 
-const { activePage = 'home' } = Astro.props;
+const { activePage = 'home', lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+
+// Menentukan link tujuan switch bahasa
+const targetLang: Lang = lang === 'id' ? 'en' : 'id';
+const switchHref = getRouteByLang(targetLang, activePage);
 ---
 
 <!-- Fixed Nav Wrapper: Selalu transparan di awal, morphing ke floating saat scroll -->
@@ -23,7 +30,7 @@ const { activePage = 'home' } = Astro.props;
     >
       
       <!-- Brand Logo -->
-      <a href="/" class="flex items-center gap-2 group">
+      <a href={getRouteByLang(lang, 'home')} class="flex items-center gap-2 group">
         <span id="logoText" class="text-xl sm:text-2xl font-black tracking-tight text-white transition-colors duration-200">
           BaliWander<span id="logoDot" class="text-sky-400">.</span>
         </span>
@@ -32,66 +39,96 @@ const { activePage = 'home' } = Astro.props;
       <!-- Menu Links Desktop -->
       <nav id="desktopNav" class="hidden md:flex items-center gap-1.5 text-base font-medium">
         <a 
-          href="/" 
+          href={getRouteByLang(lang, 'home')} 
           class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
             activePage === 'home' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
           }`}
           data-active={activePage === 'home' ? 'true' : 'false'}
         >
-          Beranda
+          {t('nav.home')}
         </a>
 
         <a 
-          href="/paket-wisata" 
+          href={getRouteByLang(lang, 'paket')} 
           class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
             activePage === 'paket' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
           }`}
           data-active={activePage === 'paket' ? 'true' : 'false'}
         >
-          Paket Wisata
+          {t('nav.packages')}
         </a>
 
         <a 
-          href="/tentang-kami" 
+          href={getRouteByLang(lang, 'tentang')} 
           class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
             activePage === 'tentang' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
           }`}
           data-active={activePage === 'tentang' ? 'true' : 'false'}
         >
-          Tentang Kami
+          {t('nav.about')}
         </a>
 
         <a 
-          href="/destinasi" 
+          href={getRouteByLang(lang, 'destinasi')} 
           class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
             activePage === 'destinasi' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
           }`}
           data-active={activePage === 'destinasi' ? 'true' : 'false'}
         >
-          Destinasi
+          {t('nav.destinations')}
         </a>
 
         <a 
-          href="/blog" 
+          href={getRouteByLang(lang, 'blog')} 
           class={`px-4 py-2 rounded-full font-semibold transition-colors duration-200 nav-link ${
             activePage === 'blog' ? 'bg-white/15 text-white active-link' : 'text-white/90 hover:bg-white/15'
           }`}
           data-active={activePage === 'blog' ? 'true' : 'false'}
         >
-          Blog
+          {t('nav.blog')}
         </a>
       </nav>
 
-      <!-- Tombol Kontak Kanan & Mobile Hamburger -->
-      <div class="flex items-center gap-3">
+      <!-- Tombol Kanan: Language Switcher, Kontak WhatsApp, & Mobile Hamburger -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Language Switcher Pill -->
+        <div 
+          id="langSwitcher"
+          class="flex items-center p-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-bold tracking-wider transition-colors duration-300"
+        >
+          <a
+            href={lang === 'id' ? '#' : getRouteByLang('id', activePage)}
+            class={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+              lang === 'id' 
+                ? 'bg-white text-slate-900 shadow-sm pointer-events-none' 
+                : 'text-white/80 hover:text-white'
+            }`}
+            aria-label="Bahasa Indonesia"
+          >
+            ID
+          </a>
+          <a
+            href={lang === 'en' ? '#' : getRouteByLang('en', activePage)}
+            class={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+              lang === 'en' 
+                ? 'bg-white text-slate-900 shadow-sm pointer-events-none' 
+                : 'text-white/80 hover:text-white'
+            }`}
+            aria-label="English"
+          >
+            EN
+          </a>
+        </div>
+
+        <!-- WhatsApp CTA -->
         <a 
-          href="https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20ingin%20konsultasi%20paket%20tour%20Bali" 
+          href={`https://wa.me/6281234567890?text=${encodeURIComponent(t('nav.whatsapp_msg'))}`} 
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm sm:text-base font-bold transition-all active:scale-95 shadow-sm"
+          class="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm sm:text-base font-bold transition-all active:scale-95 shadow-sm"
         >
           <MessageSquare class="w-4 h-4 sm:w-5 sm:h-5" />
-          <span>Konsultasi Trip</span>
+          <span class="hidden sm:inline">{t('nav.consult')}</span>
         </a>
 
         <!-- Mobile Hamburger Button -->
@@ -113,20 +150,20 @@ const { activePage = 'home' } = Astro.props;
       id="mobileMenuDropdown" 
       class="hidden w-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl p-4 pointer-events-auto space-y-1.5 md:hidden"
     >
-      <a href="/" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'home' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
-        Beranda
+      <a href={getRouteByLang(lang, 'home')} class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'home' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        {t('nav.home')}
       </a>
-      <a href="/paket-wisata" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'paket' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
-        Paket Wisata
+      <a href={getRouteByLang(lang, 'paket')} class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'paket' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        {t('nav.packages')}
       </a>
-      <a href="/tentang-kami" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'tentang' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
-        Tentang Kami
+      <a href={getRouteByLang(lang, 'tentang')} class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'tentang' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        {t('nav.about')}
       </a>
-      <a href="/destinasi" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'destinasi' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
-        Destinasi
+      <a href={getRouteByLang(lang, 'destinasi')} class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'destinasi' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        {t('nav.destinations')}
       </a>
-      <a href="/blog" class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'blog' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
-        Blog
+      <a href={getRouteByLang(lang, 'blog')} class={`block px-4 py-3 rounded-xl font-semibold text-base ${activePage === 'blog' ? 'text-sky-600 bg-sky-50/70' : 'text-slate-700 hover:bg-slate-50'}`}>
+        {t('nav.blog')}
       </a>
     </div>
 
@@ -154,6 +191,18 @@ const { activePage = 'home' } = Astro.props;
   #mainHeader.is-floating #mobileMenuBtn {
     background-color: #f1f5f9 !important;
     color: #334155 !important;
+  }
+  
+  /* Lang switcher saat floating */
+  #mainHeader.is-floating #langSwitcher {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+  }
+  #mainHeader.is-floating #langSwitcher a:not(.bg-white) {
+    color: #64748b !important;
+  }
+  #mainHeader.is-floating #langSwitcher a:not(.bg-white):hover {
+    color: #0f172a !important;
   }
 </style>
 

@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import HeroWireframe from '../../components/HeroWireframe.astro';
+import PopularPackage from '../../components/PopularPackage.astro';
+import USP1 from '../../components/USP1.astro';
+import FeaturedTrips from '../../components/FeaturedTrips.astro';
+import PopularDestinations from '../../components/PopularDestinations.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import BookingStepsAndFAQ from '../../components/BookingStepsAndFAQ.astro';
+import BlogSection from '../../components/BlogSection.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout 
+	title="BaliWander - Professional Bali Tour & Travel | Private Tours & Chauffeur Services" 
+	description="Top-rated private day tours, honeymoon packages, and reliable English-speaking driver services in Bali & Lombok."
+	lang="en"
+>
+	<!-- 1. Header Navigation -->
+	<Header activePage="home" lang="en" />
+
+	<main>
+		<!-- 2. Hero Section (Headline + Booking Widget) -->
+		<HeroWireframe lang="en" />
+
+		<!-- 3. Popular Day Tours -->
+		<PopularPackage lang="en" />
+
+		<!-- 4. Why Travel With Us (USP + Editorial Photos) -->
+		<USP1 lang="en" />
+
+		<!-- 5. All-Inclusive Multi-Day Packages & Stays -->
+		<FeaturedTrips lang="en" />
+
+		<!-- 6. Featured Destinations -->
+		<PopularDestinations lang="en" />
+
+		<!-- 7. Guest Reviews & Social Proof -->
+		<Testimonials lang="en" />
+
+		<!-- 8. Booking Steps & FAQ -->
+		<BookingStepsAndFAQ lang="en" />
+
+		<!-- 9. Travel Guides & Articles -->
+		<BlogSection lang="en" />
+
+		<!-- 10. WhatsApp Call-to-Action Banner -->
+		<CtaBanner lang="en" />
+	</main>
+
+	<!-- 11. Footer -->
+	<Footer lang="en" />
+</Layout>

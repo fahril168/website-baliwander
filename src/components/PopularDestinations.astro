@@ -1,39 +1,49 @@
 ---
-import { popularDestinations } from '../data/tours';
+import { popularDestinationsData } from '../data/tours';
 import { ArrowUpRight, MapPin } from '@lucide/astro';
+import { useTranslations, getRouteByLang, type Lang } from '../i18n/ui';
 
-// Ambil 3 destinasi utama yang paling ikonik
-const featuredDestinations = popularDestinations.slice(0, 3);
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+const featuredDestinations = popularDestinationsData[lang].slice(0, 3);
 ---
 
 <section id="destinations" class="py-24 bg-white border-t border-slate-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header: Bahasa Indonesia yang rapi & konsisten -->
+    <!-- Section Header -->
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
       <div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-          Destinasi Wisata Favorit
+          {t('destinations.title')}
         </h2>
         <p class="text-base sm:text-lg text-slate-600 mt-2 max-w-xl">
-          Eksplorasi kawasan terbaik Bali. Melayani penjemputan bandara, hotel area selatan, hingga penyeberangan pulau.
+          {t('destinations.subtitle')}
         </p>
       </div>
 
       <a 
-        href="#popular-packages" 
+        href={getRouteByLang(lang, 'destinasi')} 
         class="group inline-flex items-center gap-1.5 text-base sm:text-lg font-bold text-sky-600 hover:text-sky-700 transition-colors whitespace-nowrap self-start sm:self-auto py-1"
       >
-        <span>Lihat Semua Wilayah</span>
+        <span>{t('destinations.view_all')}</span>
         <ArrowUpRight class="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </a>
     </div>
 
-    <!-- 3 Kolom Kartu Destinasi Besar, Mewah & Lega -->
+    <!-- 3 Kolom Kartu Destinasi Besar -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {featuredDestinations.map((d) => (
         <a 
-          href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20mau%20konsultasi%20trip%20ke%20area%20${encodeURIComponent(d.name)}`}
+          href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+            lang === 'en'
+              ? `Hello BaliWander, I would like to consult about travel packages to ${d.name}`
+              : `Halo BaliWander, mau konsultasi trip ke area ${d.name}`
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
           class="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col justify-end p-6 sm:p-8"
@@ -45,7 +55,7 @@ const featuredDestinations = popularDestinations.slice(0, 3);
             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
           />
           
-          <!-- Gradien Scrim Lembut Hanya di Bagian Bawah agar Foto Tetap Cerah -->
+          <!-- Gradien Scrim Lembut Hanya di Bagian Bawah -->
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
           
           <!-- Content di Atas Foto -->
@@ -59,7 +69,7 @@ const featuredDestinations = popularDestinations.slice(0, 3);
                 {d.name}
               </h3>
               <p class="text-xs sm:text-sm text-slate-200 font-medium">
-                {d.tripsCount} Pilihan Paket Tour
+                {d.tripsCount} {t('destinations.packages_count')}
               </p>
             </div>
 

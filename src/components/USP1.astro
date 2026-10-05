@@ -1,20 +1,15 @@
 ---
 import { Check } from '@lucide/astro';
+import { uspPointsData } from '../data/tours';
+import { useTranslations, type Lang } from '../i18n/ui';
 
-const points = [
-  {
-    title: 'Driver & Guide Asli Lokal Bali',
-    desc: 'Bukan sekadar mengantar rute. Driver kami paham jam sepi tempat wisata, jalur tikus saat jalan raya padat, dan rekomendasi kuliner higienis yang ramah di kantong.'
-  },
-  {
-    title: 'Harga Jujur Tanpa Toko Oleh-Oleh Paksa',
-    desc: 'Banyak travel murah memaksa tamu mampir berjam-jam ke galeri komisi. Bersama kami, waktu liburan sepenuhnya milik kamu tanpa agenda belanja tersembunyi.'
-  },
-  {
-    title: '100% Private Trip & Armada Bersih Terawat',
-    desc: 'Mobil tidak pernah digabung dengan rombongan orang asing. Seluruh unit (Avanza, Innova Reborn, HiAce) bersih, wangi, dan pendingin udara selalu dingin prima.'
-  }
-];
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+const points = uspPointsData[lang];
 ---
 
 <section id="usp-1" class="py-24 bg-white overflow-hidden">
@@ -25,10 +20,10 @@ const points = [
       <div class="lg:col-span-6 space-y-8">
         <div>
           <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-            Mengapa Memilih Kami?
+            {t('usp.title')}
           </h2>
           <p class="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed max-w-xl">
-            Kami merancang setiap perjalanan layaknya mengantar teman baik keliling Bali. Transparan, nyaman, dan bebas dari jebakan turis yang melelahkan.
+            {t('usp.subtitle')}
           </p>
         </div>
 
@@ -52,7 +47,7 @@ const points = [
         </div>
       </div>
 
-      <!-- Sisi Kanan: 2 Foto Berukuran Lebih Besar (lg:col-span-6, tinggi & gagah) -->
+      <!-- Sisi Kanan: 2 Foto Berukuran Lebih Besar -->
       <div class="lg:col-span-6">
         <div class="grid grid-cols-12 gap-4 sm:gap-6 items-center">
           
@@ -60,16 +55,16 @@ const points = [
           <div class="col-span-7 rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-slate-100 h-[420px] sm:h-[480px] bg-slate-100">
             <img 
               src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1000&q=80" 
-              alt="Wisata Tebing dan Pantai Bali" 
+              alt="Bali Scenic Cliffs and Beaches" 
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
             />
           </div>
 
-          <!-- Foto 2: Pura Uluwatu Sunset (Diberi offset vertikal rapi) -->
+          <!-- Foto 2: Pura Uluwatu Sunset -->
           <div class="col-span-5 rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-slate-100 h-[360px] sm:h-[420px] bg-slate-100 translate-y-6 sm:translate-y-8">
             <img 
               src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=800&q=80" 
-              alt="Pemandangan Sunset Pura Uluwatu Bali" 
+              alt="Bali Heritage Sunset" 
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
             />
           </div>

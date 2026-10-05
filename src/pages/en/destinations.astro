@@ -1,34 +1,37 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import PageHeaderBanner from '../components/PageHeaderBanner.astro';
-import Footer from '../components/Footer.astro';
-import { popularDestinations } from '../data/tours';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import PageHeaderBanner from '../../components/PageHeaderBanner.astro';
+import Footer from '../../components/Footer.astro';
+import { popularDestinationsData } from '../../data/tours';
 import { MapPin, ArrowUpRight } from '@lucide/astro';
+
+const destinations = popularDestinationsData.en;
 ---
 
 <Layout 
-  title="Kawasan & Destinasi Wisata Bali | BaliWander"
-  description="Eksplorasi wilayah wisata terbaik di Bali mulai dari Nusa Penida, Ubud, Uluwatu, Kintamani hingga Kepulauan Gili bersama supir lokal."
+  title="Bali Top Destinations & Regions | BaliWander"
+  description="Discover the finest travel regions across Bali — from Nusa Penida, Ubud, Uluwatu, and Kintamani to the pristine Gili Islands with your private driver."
+  lang="en"
 >
-  <Header activePage="destinasi" lang="id" />
+  <Header activePage="destinasi" lang="en" />
 
   <main>
-    <!-- Header Banner Gambar Full-Width -->
+    <!-- Header Banner Full-Width -->
     <PageHeaderBanner 
-      title="Kawasan & Destinasi Favorit"
-      description="Setiap sudut Bali memiliki daya tarik yang berbeda: mulai dari tebing laut eksotis di selatan, sejuknya sawah terasering di Ubud, hingga keagungan gunung berapi di Kintamani."
+      title="Top Regions & Destinations"
+      description="Every corner of Bali has its distinct charm: from dramatic ocean cliffs in the south and lush emerald rice terraces in Ubud to active volcanic highlands in Kintamani."
       image="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=2000&q=85"
     />
 
     <div class="py-24 bg-slate-50/60 min-h-screen border-t border-slate-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- 6 Destinasi dalam Grid 3 Kolom Rapi -->
+        <!-- 6 Destinations Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {popularDestinations.map((d) => (
+          {destinations.map((d) => (
             <a 
-              href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20mau%20konsultasi%20trip%20ke%20area%20${encodeURIComponent(d.name)}`}
+              href={`https://wa.me/6281234567890?text=${encodeURIComponent(`Hello BaliWander, I would like to consult about travel packages to ${d.name}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               class="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-slate-100 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col justify-end p-6 sm:p-8"
@@ -51,7 +54,7 @@ import { MapPin, ArrowUpRight } from '@lucide/astro';
                     {d.name}
                   </h2>
                   <p class="text-xs sm:text-sm text-slate-200 font-medium">
-                    {d.tripsCount} Pilihan Paket Tour
+                    {d.tripsCount} Tour Package Options
                   </p>
                 </div>
 
@@ -67,5 +70,5 @@ import { MapPin, ArrowUpRight } from '@lucide/astro';
     </div>
   </main>
 
-  <Footer lang="id" />
+  <Footer lang="en" />
 </Layout>

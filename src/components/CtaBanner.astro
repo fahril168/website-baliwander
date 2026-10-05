@@ -1,5 +1,13 @@
 ---
 import { MessageSquare, ArrowRight } from '@lucide/astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="relative py-16 sm:py-20 overflow-hidden w-full">
@@ -7,7 +15,7 @@ import { MessageSquare, ArrowRight } from '@lucide/astro';
   <div class="absolute inset-0 z-0">
     <img 
       src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=2200&q=85" 
-      alt="Pemandangan Pesisir Laut Bali" 
+      alt="Scenic Bali Ocean Coast" 
       class="w-full h-full object-cover object-center" 
     />
     <!-- Scrim Gelap Transparan -->
@@ -17,23 +25,27 @@ import { MessageSquare, ArrowRight } from '@lucide/astro';
   <!-- Konten Center Sempurna & Ramping -->
   <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-5">
     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-      Punya Rencana Trip Sendiri atau Butuh Rute Khusus?
+      {t('cta.title')}
     </h2>
 
     <p class="text-base sm:text-lg text-slate-100 leading-relaxed font-normal max-w-2xl mx-auto">
-      Jangan ragu untuk berkonsultasi. Tim supir dan admin lokal kami siap membantu menyusun estimasi waktu tempuh, rute terdekat, hingga mobil yang paling nyaman untuk rombonganmu.
+      {t('cta.desc')}
     </p>
 
-    <!-- Tombol dengan Ukuran Padding, Ikon & Label seperti Sebelumnya -->
+    <!-- Tombol WhatsApp CTA -->
     <div class="pt-2 flex justify-center">
       <a 
-        href="https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20ingin%20konsultasi%20rute%20custom%20trip%20di%20Bali" 
+        href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+          lang === 'en'
+            ? 'Hello BaliWander, I would like to consult on a custom private itinerary for Bali.'
+            : 'Halo BaliWander, saya ingin konsultasi rute custom trip di Bali'
+        )}`} 
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-base font-bold transition-all active:scale-95 shadow-md shadow-sky-500/15 cursor-pointer whitespace-nowrap"
       >
         <MessageSquare class="w-5 h-5" />
-        <span>Chat WhatsApp Sekarang</span>
+        <span>{t('cta.btn')}</span>
         <ArrowRight class="w-4 h-4 ml-1" />
       </a>
     </div>

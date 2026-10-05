@@ -1,41 +1,46 @@
 ---
-import { featuredTrips } from '../data/tours';
+import { featuredTripsData } from '../data/tours';
 import { MapPin, Clock, Check, ArrowRight } from '@lucide/astro';
+import { useTranslations, formatPrice, getRouteByLang, type Lang } from '../i18n/ui';
 
-function formatRupiah(num: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+interface Props {
+  lang?: Lang;
 }
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+const trips = featuredTripsData[lang];
 ---
 
 <section id="trips" class="py-24 bg-slate-50/70 border-t border-slate-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header: Jelas & Lugas -->
+    <!-- Section Header -->
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
       <div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-          Paket Liburan Lengkap & Menginap
+          {t('featured.title')}
         </h2>
         <p class="text-base sm:text-lg text-slate-600 mt-2 max-w-2xl">
-          Itinerary multi-hari tematik bebas ribet: sudah termasuk hotel/villa pilihan, penjemputan bandara, supir pribadi, dan tiket wisata.
+          {t('featured.subtitle')}
         </p>
       </div>
 
       <a 
-        href="#popular-packages" 
+        href={getRouteByLang(lang, 'paket')} 
         class="group inline-flex items-center gap-1.5 text-base sm:text-lg font-bold text-sky-600 hover:text-sky-700 transition-colors whitespace-nowrap self-start sm:self-auto py-1"
       >
-        <span>Lihat Semua Paket</span>
+        <span>{t('featured.view_all')}</span>
         <ArrowRight class="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
 
-    <!-- Cards Grid (3 Kolom Bersih, Senada dengan Desain Sebelumnya) -->
+    <!-- Cards Grid (3 Kolom) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {featuredTrips.map((trip) => (
+      {trips.map((trip) => (
         <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-1">
           
-          <!-- Image Cover (Bersih, foto tinggi & bernafas) -->
+          <!-- Image Cover -->
           <div class="relative h-64 overflow-hidden bg-slate-100">
             <img 
               src={trip.image} 
@@ -47,7 +52,7 @@ function formatRupiah(num: number) {
           <!-- Card Content Body -->
           <div class="p-6 flex-1 flex flex-col justify-between">
             <div>
-              <!-- Lokasi di bawah kiri gambar & Durasi (Senada dengan Paket Populer) -->
+              <!-- Lokasi & Durasi -->
               <div class="flex items-center justify-between text-xs text-slate-500 font-medium mb-3">
                 <span class="inline-flex items-center gap-1.5 text-slate-600 font-semibold">
                   <MapPin class="w-4 h-4 text-sky-500 shrink-0" />
@@ -64,7 +69,7 @@ function formatRupiah(num: number) {
                 {trip.title}
               </h3>
 
-              <!-- Fasilitas Paket (Checklist Rapi & Terbaca) -->
+              <!-- Fasilitas Paket -->
               <div class="mt-5 pt-4 border-t border-slate-100 space-y-2">
                 {trip.highlights.map((h) => (
                   <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
@@ -75,30 +80,38 @@ function formatRupiah(num: number) {
               </div>
             </div>
 
-            <!-- Price & Tombol Aksi (Konsisten) -->
+            <!-- Bagian Bawah: Harga & CTA Button -->
             <div class="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
               <div>
-                <span class="text-xs text-slate-400 font-medium block">Total paket mulai</span>
+                <span class="text-xs text-slate-400 font-medium block">
+                  {lang === 'en' ? 'Total package from' : 'Total paket mulai'}
+                </span>
                 <div class="flex items-baseline gap-1">
                   <span class="text-xl sm:text-2xl font-extrabold text-slate-900">
-                    {formatRupiah(trip.price)}
+                    {formatPrice(trip.price, lang)}
                   </span>
-                  <span class="text-xs text-slate-500 font-medium">/paket</span>
+                  <span class="text-xs text-slate-500 font-medium">{lang === 'en' ? '/package' : '/paket'}</span>
                 </div>
               </div>
 
+              <!-- CTA WhatsApp Button Biru Langit Konsisten -->
               <a 
-                href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20bisa%20minta%20itinerary%20lengkap%20${encodeURIComponent(trip.title)}%3F`}
-                target="_blank"
+                href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+                  lang === 'en'
+                    ? `Hello BaliWander, could I get the full itinerary for ${trip.title}?`
+                    : `Halo BaliWander, bisa minta itinerary lengkap ${trip.title}?`
+                )}`} 
+                target="_blank" 
                 rel="noopener noreferrer"
                 class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold transition-all active:scale-95 shadow-sm shadow-sky-500/15 whitespace-nowrap cursor-pointer"
               >
-                <span>Detail</span>
+                <span>{lang === 'en' ? 'Detail' : 'Detail'}</span>
                 <ArrowRight class="w-4 h-4" />
               </a>
             </div>
 
           </div>
+
         </div>
       ))}
     </div>

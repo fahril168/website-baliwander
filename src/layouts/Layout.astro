@@ -4,16 +4,18 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	lang?: string;
 }
 
 const { 
 	title = "Nusantara Wander - Tour & Travel Bali & Lombok", 
-	description = "Paket wisata eksklusif Bali & Lombok terbaik dengan layanan private & open trip profesional." 
+	description = "Paket wisata eksklusif Bali & Lombok terbaik dengan layanan private & open trip profesional.",
+	lang = "id"
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="id" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />

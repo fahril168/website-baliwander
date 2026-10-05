@@ -1,5 +1,13 @@
 ---
 import { Phone, Mail, MapPin, MessageSquare, Camera, Video } from '@lucide/astro';
+import { useTranslations, getRouteByLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <footer class="bg-white border-t border-slate-200/80 pt-16 pb-12">
@@ -11,7 +19,7 @@ import { Phone, Mail, MapPin, MessageSquare, Camera, Video } from '@lucide/astro
       <!-- Kolom 1 (Kiri - Lebar): Brand & Tentang Kami (lg:col-span-5) -->
       <div class="lg:col-span-5 space-y-4">
         <!-- Logo Identik dengan Navbar -->
-        <a href="#" class="inline-flex items-center gap-1.5 group">
+        <a href={getRouteByLang(lang, 'home')} class="inline-flex items-center gap-1.5 group">
           <span class="text-2xl font-black tracking-tight text-slate-900">
             BaliWander<span class="text-sky-500 font-black">.</span>
           </span>
@@ -21,10 +29,10 @@ import { Phone, Mail, MapPin, MessageSquare, Camera, Video } from '@lucide/astro
         </a>
 
         <p class="text-sm text-slate-600 leading-relaxed max-w-md font-normal">
-          Penyedia paket liburan private, open trip, dan sewa transportasi berizin resmi di Bali & sekitarnya. Kami mengutamakan kenyamanan, transparansi rute, dan keselamatan perjalanan.
+          {t('footer.about_desc')}
         </p>
 
-        <!-- Ikon Sosial Media Nyata -->
+        <!-- Ikon Sosial Media -->
         <div class="pt-2 flex items-center gap-2.5 text-slate-500">
           <a 
             href="https://wa.me/6281234567890" 
@@ -54,24 +62,47 @@ import { Phone, Mail, MapPin, MessageSquare, Camera, Video } from '@lucide/astro
 
       <!-- Kolom 2 (Tengah): Navigasi Utama Halaman (lg:col-span-3) -->
       <div class="lg:col-span-3">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">Navigasi</h3>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">
+          {t('footer.nav_title')}
+        </h3>
         <ul class="space-y-3 text-sm text-slate-600">
-          <li><a href="#" class="hover:text-sky-600 transition-colors">Beranda</a></li>
-          <li><a href="#popular-packages" class="hover:text-sky-600 transition-colors">Paket Wisata Populer</a></li>
-          <li><a href="#usp-1" class="hover:text-sky-600 transition-colors">Mengapa Memilih Kami</a></li>
-          <li><a href="#trips" class="hover:text-sky-600 transition-colors">Paket Liburan Lengkap</a></li>
-          <li><a href="#destinations" class="hover:text-sky-600 transition-colors">Destinasi Favorit</a></li>
-          <li><a href="#faq" class="hover:text-sky-600 transition-colors">Tanya Jawab (FAQ)</a></li>
+          <li>
+            <a href={getRouteByLang(lang, 'home')} class="hover:text-sky-600 transition-colors">
+              {t('nav.home')}
+            </a>
+          </li>
+          <li>
+            <a href={getRouteByLang(lang, 'paket')} class="hover:text-sky-600 transition-colors">
+              {t('nav.packages')}
+            </a>
+          </li>
+          <li>
+            <a href={getRouteByLang(lang, 'tentang')} class="hover:text-sky-600 transition-colors">
+              {t('nav.about')}
+            </a>
+          </li>
+          <li>
+            <a href={getRouteByLang(lang, 'destinasi')} class="hover:text-sky-600 transition-colors">
+              {t('nav.destinations')}
+            </a>
+          </li>
+          <li>
+            <a href={getRouteByLang(lang, 'blog')} class="hover:text-sky-600 transition-colors">
+              {t('nav.blog')}
+            </a>
+          </li>
         </ul>
       </div>
 
       <!-- Kolom 3 (Kanan): Kontak & Kantor Resmi (lg:col-span-4) -->
       <div class="lg:col-span-4">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">Kontak & Lokasi</h3>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">
+          {t('footer.contact_title')}
+        </h3>
         <ul class="space-y-3.5 text-sm text-slate-600">
           <li class="flex items-start gap-2.5">
             <MapPin class="w-4 h-4 text-sky-500 shrink-0 mt-1" />
-            <span class="leading-relaxed">Jl. Bypass Ngurah Rai No. 88, Sanur, Denpasar Selatan, Bali 80228</span>
+            <span class="leading-relaxed">{t('footer.address')}</span>
           </li>
           <li class="flex items-center gap-2.5">
             <Phone class="w-4 h-4 text-sky-500 shrink-0" />
@@ -86,10 +117,10 @@ import { Phone, Mail, MapPin, MessageSquare, Camera, Video } from '@lucide/astro
 
     </div>
 
-    <!-- Bottom Copyright & Developer Branding (Disatukan & Center di Tengah) -->
+    <!-- Bottom Copyright -->
     <div class="pt-8 border-t border-slate-100 text-center text-sm text-slate-500">
       <p>
-        © 2026 BaliWander. Powered by <a href="https://fahrildev.site" target="_blank" rel="noopener noreferrer" class="text-sky-500 hover:text-sky-600 font-semibold transition-colors">FahrilDev</a>.
+        © 2026 BaliWander. {t('footer.rights')} Powered by <a href="https://fahrildev.site" target="_blank" rel="noopener noreferrer" class="text-sky-500 hover:text-sky-600 font-semibold transition-colors">FahrilDev</a>.
       </p>
     </div>
 

@@ -1,37 +1,46 @@
 ---
-import { blogPosts } from '../data/tours';
+import { blogPostsData } from '../data/tours';
 import { ArrowRight } from '@lucide/astro';
+import { useTranslations, getRouteByLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = useTranslations(lang);
+const posts = blogPostsData[lang];
 ---
 
 <section id="blog" class="py-24 bg-slate-50/70 border-t border-slate-100 overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header dengan Link "Lihat Semua Artikel" di Kanan Atas -->
+    <!-- Section Header dengan Link "Lihat Semua Artikel" -->
     <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
       <div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-          Panduan & Tips Wisata Bali
+          {t('blog.title')}
         </h2>
         <p class="text-base sm:text-lg text-slate-600 mt-2 max-w-xl">
-          Catatan lapangan dan tips praktis langsung dari supir serta pemandu lokal kami agar liburanmu berjalan lancar.
+          {t('blog.subtitle')}
         </p>
       </div>
 
       <a 
-        href="#blog" 
+        href={getRouteByLang(lang, 'blog')} 
         class="group inline-flex items-center gap-1.5 text-base sm:text-lg font-bold text-sky-600 hover:text-sky-700 transition-colors whitespace-nowrap self-start sm:self-auto py-1"
       >
-        <span>Lihat Semua Artikel</span>
+        <span>{t('blog.view_all')}</span>
         <ArrowRight class="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
 
     <!-- Blog Grid: 3 Kolom Bersih & Konsisten -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {blogPosts.map((post) => (
+      {posts.map((post) => (
         <article class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-1.5">
           
-          <!-- Image Cover (Lebih Tinggi & Bersih, Tanpa Floating Badge) -->
+          <!-- Image Cover -->
           <div class="relative h-60 overflow-hidden bg-slate-100">
             <img 
               src={post.image} 
@@ -64,17 +73,21 @@ import { ArrowRight } from '@lucide/astro';
             <!-- Link Baca Selengkapnya -->
             <div class="mt-6 pt-5 border-t border-slate-100 flex items-center justify-end">
               <a 
-                href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20membaca%20artikel%20${encodeURIComponent(post.title)}%20dan%20mau%20konsultasi`}
+                href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+                  lang === 'en'
+                    ? `Hello BaliWander, I was reading your article "${post.title}" and would like to ask a question.`
+                    : `Halo BaliWander, saya membaca artikel "${post.title}" dan mau konsultasi.`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 text-sm font-bold text-sky-600 group-hover:text-sky-700 transition-colors"
               >
-                <span>Baca Panduan</span>
+                <span>{t('blog.read_more')}</span>
                 <ArrowRight class="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
             </div>
-          </div>
 
+          </div>
         </article>
       ))}
     </div>

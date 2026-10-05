@@ -1,29 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import PageHeaderBanner from '../components/PageHeaderBanner.astro';
-import Footer from '../components/Footer.astro';
-import { popularPackages, featuredTrips } from '../data/tours';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import PageHeaderBanner from '../../components/PageHeaderBanner.astro';
+import Footer from '../../components/Footer.astro';
+import { popularPackagesData, featuredTripsData } from '../../data/tours';
 import { MapPin, Clock, ArrowRight, Check } from '@lucide/astro';
+import { formatPrice } from '../../i18n/ui';
 
-const allTours = [...popularPackages, ...featuredTrips];
-
-function formatRupiah(num: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
-}
+const allTours = [...popularPackagesData.en, ...featuredTripsData.en];
 ---
 
 <Layout 
-  title="Pilihan Paket Wisata Bali & Lombok | BaliWander"
-  description="Katalog lengkap paket tour private harian, paket honeymoon, dan liburan keluarga di Bali dengan supir lokal berpengalaman."
+  title="Bali & Lombok Tour Packages | BaliWander"
+  description="Complete catalog of private day tours, honeymoon packages, and family vacations in Bali with verified English-speaking local drivers."
+  lang="en"
 >
-  <Header activePage="paket" lang="id" />
+  <Header activePage="paket" lang="en" />
 
   <main>
-    <!-- Header Banner Gambar Full-Width -->
+    <!-- Header Banner Full-Width -->
     <PageHeaderBanner 
-      title="Pilihan Paket Wisata"
-      description="Dari private tour harian keliling pantai eksotis hingga paket menginap lengkap dengan villa dan penjemputan bandara. Seluruh rute fleksibel dan bebas kamu sesuaikan."
+      title="Tour Packages & Day Trips"
+      description="From private day trips exploring scenic coastal cliffs to all-inclusive villa stays with airport transfers. All itineraries are fully flexible and tailored to your pace."
       image="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=2000&q=85"
     />
 
@@ -72,19 +70,19 @@ function formatRupiah(num: number) {
 
               <div class="p-6 sm:p-7 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
                 <div>
-                  <span class="text-xs text-slate-400 font-medium block">Mulai dari</span>
+                  <span class="text-xs text-slate-400 font-medium block">Starting from</span>
                   <span class="text-xl sm:text-2xl font-extrabold text-slate-900">
-                    {formatRupiah(tour.pricePerPax || tour.price)}
+                    {formatPrice(tour.price, 'en')}
                   </span>
                 </div>
 
                 <a 
-                  href={`https://wa.me/6281234567890?text=Halo%20BaliWander%2C%20saya%20tertarik%20tanya%20detail%20paket%20${encodeURIComponent(tour.title)}`}
+                  href={`https://wa.me/6281234567890?text=${encodeURIComponent(`Hello BaliWander, I would like to inquire about the ${tour.title} package.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold transition-all active:scale-95 shadow-sm shadow-sky-500/15 whitespace-nowrap cursor-pointer"
                 >
-                  <span>Pesan</span>
+                  <span>Book Now</span>
                   <ArrowRight class="w-4 h-4" />
                 </a>
               </div>
@@ -96,5 +94,5 @@ function formatRupiah(num: number) {
     </div>
   </main>
 
-  <Footer lang="id" />
+  <Footer lang="en" />
 </Layout>
