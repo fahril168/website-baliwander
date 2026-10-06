@@ -3,14 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import PageHeaderBanner from '../components/PageHeaderBanner.astro';
 import Footer from '../components/Footer.astro';
-import { popularPackages, featuredTrips } from '../data/tours';
+import { popularPackagesData, featuredTripsData } from '../data/tours';
 import { MapPin, Clock, ArrowRight, Check } from '@lucide/astro';
+import { formatPrice } from '../i18n/ui';
 
-const allTours = [...popularPackages, ...featuredTrips];
-
-function formatRupiah(num: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
-}
+const allTours = [...popularPackagesData.id, ...featuredTripsData.id];
 ---
 
 <Layout 
@@ -74,7 +71,7 @@ function formatRupiah(num: number) {
                 <div>
                   <span class="text-xs text-slate-400 font-medium block">Mulai dari</span>
                   <span class="text-xl sm:text-2xl font-extrabold text-slate-900">
-                    {formatRupiah(tour.pricePerPax || tour.price)}
+                    {formatPrice(tour.price, 'id')}
                   </span>
                 </div>
 
